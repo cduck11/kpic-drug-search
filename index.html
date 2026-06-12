@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>KPIC 약학정보원 의약품 검색 | 헤인파트너스</title>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Malgun Gothic',sans-serif;background:#f0f4f8;color:#222;font-size:14px}
@@ -162,17 +159,27 @@ let atcMainMap={}, atcSubMap={};
 function buildAtcMap(){
   atcMainMap={'':new Set()};
   atcSubMap={};
+  // 3자리 코드→이름 매핑 임시 저장
+  const sub3Map={};
   for(const d of all){
     if(!d.atc_cd)continue;
     const parts=d.atc_cd.split('|');
     const code=parts[0]||'', name=parts[2]||parts[1]||code;
-    // 대분류: 첫 글자
     const mainCode=code.charAt(0).toUpperCase();
     if(!mainCode)continue;
     if(!atcMainMap[mainCode])atcMainMap[mainCode]=new Set();
     atcMainMap[mainCode].add(code+'|'+name);
-    if(!atcSubMap[mainCode])atcSubMap[mainCode]=new Set();
-    atcSubMap[mainCode].add(code+'|'+name);
+    // 소분류: 첫 3자리만
+    const sub3=code.slice(0,3).toUpperCase();
+    if(!sub3Map[mainCode])sub3Map[mainCode]={};
+    if(!sub3Map[mainCode][sub3])sub3Map[mainCode][sub3]=name;
+  }
+  // sub3Map → atcSubMap (Set 형태로)
+  for(const mc of Object.keys(sub3Map)){
+    atcSubMap[mc]=new Set();
+    for(const [s3,sname] of Object.entries(sub3Map[mc])){
+      atcSubMap[mc].add(s3+'|'+sname);
+    }
   }
   renderAtcMain();
 }
@@ -202,7 +209,7 @@ function setAtcMain(code){
     let html='<span>소분류</span><button class="atc-btn on" onclick="setAtcSub(\'\')">전체</button>';
     for(const s of subs){
       const [sc,sn]=s.split('|');
-      html+='<button class="atc-btn" onclick="setAtcSub(\''+esc(sc)+'\')" id="atcS_'+esc(sc)+'">'+esc(sc)+' '+esc(sn)+'</button>';
+      const safeId=sc.replace(/[^A-Z0-9]/gi,'');html+='<button class="atc-btn" onclick="setAtcSub(\''+esc(sc)+'\')" id="atcS_'+safeId+'">'+esc(sc)+' '+esc(sn)+'</button>';
     }
     subRow.innerHTML=html;
     subRow.classList.add('show');
@@ -215,7 +222,8 @@ function setAtcMain(code){
 function setAtcSub(code){
   curAtcSub=code; pg=1;
   document.querySelectorAll('.atc-btn').forEach(b=>b.classList.remove('on'));
-  const btn=code?document.getElementById('atcS_'+code):document.querySelector('.atc-btn');
+  const safeId=code.replace(/[^A-Z0-9]/gi,'');
+  const btn=code?document.getElementById('atcS_'+safeId):document.querySelector('.atc-btn');
   if(btn)btn.classList.add('on');
   doSearch();
 }
@@ -272,7 +280,7 @@ function doSearch(){
     // ATC 대분류
     if(curAtcMain&&!(d.atc_cd&&d.atc_cd.charAt(0).toUpperCase()===curAtcMain))return false;
     // ATC 소분류
-    if(curAtcSub&&!(d.atc_cd&&d.atc_cd.startsWith(curAtcSub)))return false;
+    if(curAtcSub&&!(d.atc_cd&&d.atc_cd.toUpperCase().startsWith(curAtcSub)))return false;
     return true;
   });
 
