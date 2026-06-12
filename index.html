@@ -11,10 +11,10 @@ header{background:linear-gradient(135deg,#1a4f8a,#2a6fd4);color:white;padding:22
 header h1{font-size:22px;font-weight:700}
 header p{font-size:13px;opacity:.8;margin-top:5px}
 .sb{background:white;padding:14px 30px;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.sb input{flex:1;min-width:200px;padding:9px 14px;border:2px solid #ddd;border-radius:8px;font-size:15px;outline:none;transition:border .2s}
+.sb input{flex:1;min-width:200px;padding:10px 16px;border:2px solid #ddd;border-radius:8px;font-size:15px;outline:none;transition:border .2s}
 .sb input:focus{border-color:#1a4f8a}
-.sb select{padding:9px 10px;border:2px solid #ddd;border-radius:8px;font-size:13px;background:white;outline:none;cursor:pointer}
-.sb button{padding:9px 22px;background:#1a4f8a;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:background .2s}
+.sb select{padding:10px 10px;border:2px solid #ddd;border-radius:8px;font-size:13px;background:white;outline:none;cursor:pointer}
+.sb button{padding:10px 22px;background:#1a4f8a;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:background .2s}
 .sb button:hover{background:#153d6e}
 .st{padding:9px 30px;font-size:13px;color:#555;background:#eef2ff;border-bottom:1px solid #dde3f5}
 .res{padding:16px 30px;max-width:1200px;margin:0 auto}
@@ -31,16 +31,17 @@ header p{font-size:13px;opacity:.8;margin-top:5px}
 .ora{background:#fff3e0!important;color:#e65100!important}
 .grn{background:#e8f5e9!important;color:#2e7d32!important}
 .gray{background:#f5f5f5!important;color:#666!important}
-.dtl{display:none;padding:12px 14px;background:#f8f9ff;border-radius:8px;margin-top:10px;font-size:12px;line-height:2;border:1px solid #e8edff}
-.dtl b{display:inline-block;width:85px;color:#555;font-weight:600}
+.dtl{display:none;padding:12px 14px;background:#f8f9ff;border-radius:8px;margin-top:10px;font-size:13px;line-height:2;border:1px solid #e8edff}
+.dtl .row{display:flex;gap:8px}
+.dtl .lbl{flex-shrink:0;width:85px;color:#777;font-weight:600}
+.dtl .val{color:#333;word-break:break-all}
 .pg{text-align:center;padding:20px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}
-.pg button{padding:7px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:12px;transition:all .15s}
+.pg button{padding:7px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:12px}
 .pg button.on{background:#1a4f8a;color:white;border-color:#1a4f8a}
 .pg button:hover:not(.on){background:#f0f4ff}
-.ld{text-align:center;padding:60px;font-size:16px;color:#888}
-.prog{text-align:center;padding:40px;color:#1a4f8a}
-.prog .bar{width:300px;height:8px;background:#e0e0e0;border-radius:4px;margin:12px auto;overflow:hidden}
-.prog .fill{height:100%;background:#1a4f8a;border-radius:4px;transition:width .3s}
+.ld{text-align:center;padding:60px;font-size:15px;color:#888}
+.pb{width:100%;max-width:400px;height:6px;background:#e0e0e0;border-radius:3px;margin:10px auto 0;overflow:hidden}
+.pf{height:100%;background:#1a4f8a;border-radius:3px;transition:width .3s}
 </style>
 </head>
 <body>
@@ -49,42 +50,52 @@ header p{font-size:13px;opacity:.8;margin-top:5px}
   <p>헤인파트너스(Hain Partners) &nbsp;|&nbsp; 전체 의약품 41,185건 &nbsp;|&nbsp; 데이터 출처: 약학정보원(KPIC) 2026.06</p>
 </header>
 <div class="sb">
-  <input type="text" id="q" placeholder="약품명, 영문명, 제조사, 코드, ATC코드 검색..." autofocus>
-  <select id="fn">
-    <option value="">급여 전체</option>
-    <option value="N">급여</option>
-    <option value="Y">비급여</option>
-  </select>
-  <select id="fk">
-    <option value="">마약 전체</option>
-    <option value="마약">마약</option>
-    <option value="향정">향정신성</option>
-    <option value="한외">한외마약</option>
-  </select>
+  <input type="text" id="q" placeholder="약품명, 영문명, 제조사, 약품코드, ATC코드 검색..." autofocus>
+  <select id="fn"><option value="">급여 전체</option><option value="N">급여</option><option value="Y">비급여</option></select>
+  <select id="fk"><option value="">마약 전체</option><option value="마약">마약</option><option value="향정">향정신성</option><option value="한외">한외마약</option></select>
   <button onclick="go_search()">&#128269; 검색</button>
 </div>
 <div class="st" id="st">
-  <div class="prog" id="prog">
-    &#9203; 데이터 로딩 중... <span id="pct">0%</span>
-    <div class="bar"><div class="fill" id="fill" style="width:0%"></div></div>
-  </div>
+  &#9203; 데이터 로딩 중...
+  <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
 </div>
-<div class="res" id="res"></div>
+<div class="res" id="res"><div class="ld">&#9203; 데이터를 불러오는 중입니다...</div></div>
 <div class="pg" id="pg"></div>
 
 <script>
 let all=[], fil=[], pg=1;
 const PS=20;
 
+// HTML 특수문자 이스케이프
+function esc(s){
+  if(s==null||s===undefined) return '-';
+  const str = String(s);
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// HTML 태그 제거
+function stripHtml(s){
+  if(!s) return '-';
+  return String(s).replace(/<[^>]*>/g,'').replace(/&[a-z]+;/gi,' ').trim() || '-';
+}
+
+// 제조사명 첫번째 파이프 앞만 추출
+function getUpso(s){
+  if(!s) return '';
+  return String(s).split('|')[0].trim();
+}
+
 async function loadAll(){
   const files=['data_1.json','data_2.json','data_3.json'];
   for(let i=0;i<files.length;i++){
-    const r=await fetch(files[i]);
-    const d=await r.json();
-    all=all.concat(d);
-    const pct=Math.round((i+1)/files.length*100);
-    document.getElementById('pct').textContent=pct+'%';
-    document.getElementById('fill').style.width=pct+'%';
+    try{
+      const r=await fetch(files[i]);
+      const d=await r.json();
+      all=all.concat(d);
+      const pct=Math.round((i+1)/files.length*100);
+      document.getElementById('pf').style.width=pct+'%';
+      document.getElementById('st').innerHTML='&#9203; 로딩 중... '+pct+'% ('+all.length.toLocaleString()+'건)<div class="pb"><div class="pf" style="width:'+pct+'%"></div></div>';
+    }catch(e){console.error(files[i],e);}
   }
   document.getElementById('st').innerHTML='&#10003; 전체 <b>'+all.length.toLocaleString()+'</b>개 로드 완료 &nbsp;|&nbsp; 검색어를 입력하거나 필터를 선택하세요';
   go_search();
@@ -95,14 +106,16 @@ function go_search(){
   const n=document.getElementById('fn').value;
   const k=document.getElementById('fk').value;
   fil=all.filter(d=>{
-    const mq=!q
-      ||(d.drug_name&&d.drug_name.toLowerCase().includes(q))
-      ||(d.drug_enm&&d.drug_enm.toLowerCase().includes(q))
-      ||(d.upso_name&&d.upso_name.toLowerCase().includes(q))
-      ||(d.drug_code&&d.drug_code.toLowerCase().includes(q))
-      ||(d.atc_cd&&d.atc_cd.toLowerCase().includes(q))
-      ||(d.kpic_atc&&d.kpic_atc.toLowerCase().includes(q));
-    return mq&&(!n||d.noins===n)&&(!k||(d.narcotic_kind_code&&d.narcotic_kind_code.includes(k)));
+    const nm=(d.drug_name||'').toLowerCase();
+    const en=(d.drug_enm||'').toLowerCase();
+    const up=(d.upso_name||'').toLowerCase();
+    const cd=(d.drug_code||'').toLowerCase();
+    const at=(d.atc_cd||'').toLowerCase();
+    const ka=(d.kpic_atc||'').toLowerCase();
+    const mq=!q||nm.includes(q)||en.includes(q)||up.includes(q)||cd.includes(q)||at.includes(q)||ka.includes(q);
+    const mn=!n||d.noins===n;
+    const mk=!k||(d.narcotic_kind_code&&String(d.narcotic_kind_code).includes(k));
+    return mq&&mn&&mk;
   });
   pg=1;
   document.getElementById('st').innerHTML=(q||n||k?'검색결과: ':'전체 ')+'<b>'+fil.length.toLocaleString()+'</b>개';
@@ -116,38 +129,41 @@ function render(){
     document.getElementById('pg').innerHTML='';
     return;
   }
-  document.getElementById('res').innerHTML=it.map(d=>{
+  const rows=it.map(d=>{
+    const upso=getUpso(d.upso_name);
+    const yr=d.item_permit_date?String(d.item_permit_date).slice(0,4)+'년':'';
+    const cls=d.drug_cls?String(d.drug_cls):'';
     const img=d.drug_pic
-      ?'<img class="dimg" src="'+d.drug_pic+'" onerror="this.parentNode.querySelector(\'.dph\').style.display=\'flex\';this.style.display=\'none\'" alt=""><div class="dph" style="display:none">&#128138;</div>'
+      ?'<img class="dimg" src="'+esc(d.drug_pic)+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" alt=""><div class="dph" style="display:none">&#128138;</div>'
       :'<div class="dph">&#128138;</div>';
-    const yr=d.item_permit_date?d.item_permit_date.toString().slice(0,4)+'년':'';
-    const upso=d.upso_name?d.upso_name.split('|')[0].trim():'';
-    return '<div class="card" onclick="tog(this)">'+img
+    return '<div class="card" onclick="tog(this)">'
+      +img
       +'<div class="di">'
-      +'<div class="dn">'+(d.drug_name||'-')+'</div>'
-      +'<div class="de">'+(d.drug_enm||'&nbsp;')+'</div>'
-      +'<div class="tags">'
-      +(upso?'<span class="tag gray">'+upso+'</span>':'')
-      +(d.drug_form?'<span class="tag">'+d.drug_form+'</span>':'')
-      +(d.drug_cls?'<span class="tag">'+d.drug_cls.slice(0,15)+'</span>':'')
-      +(d.noins==='Y'?'<span class="tag ora">비급여</span>':'<span class="tag grn">급여</span>')
-      +(d.narcotic_kind_code?'<span class="tag red">'+d.narcotic_kind_code+'</span>':'')
-      +(yr?'<span class="tag grn">'+yr+'</span>':'')
+        +'<div class="dn">'+esc(d.drug_name)+'</div>'
+        +'<div class="de">'+esc(d.drug_enm)+'</div>'
+        +'<div class="tags">'
+          +(upso?'<span class="tag gray">'+esc(upso)+'</span>':'')
+          +(d.drug_form?'<span class="tag">'+esc(d.drug_form)+'</span>':'')
+          +(d.noins==='Y'?'<span class="tag ora">비급여</span>':'<span class="tag grn">급여</span>')
+          +(d.narcotic_kind_code?'<span class="tag red">'+esc(d.narcotic_kind_code)+'</span>':'')
+          +(yr?'<span class="tag grn">'+yr+'</span>':'')
+        +'</div>'
+        +'<div class="dtl">'
+          +'<div class="row"><span class="lbl">약품코드</span><span class="val">'+esc(d.drug_code)+'</span></div>'
+          +'<div class="row"><span class="lbl">영문명</span><span class="val">'+esc(d.drug_enm)+'</span></div>'
+          +'<div class="row"><span class="lbl">제조사</span><span class="val">'+esc(upso)+'</span></div>'
+          +'<div class="row"><span class="lbl">ATC 코드</span><span class="val">'+esc(d.atc_cd)+'</span></div>'
+          +'<div class="row"><span class="lbl">KPIC ATC</span><span class="val">'+stripHtml(d.kpic_atc)+'</span></div>'
+          +'<div class="row"><span class="lbl">약품 분류</span><span class="val">'+esc(cls)+'</span></div>'
+          +'<div class="row"><span class="lbl">제형</span><span class="val">'+esc(d.drug_form)+'</span></div>'
+          +'<div class="row"><span class="lbl">허가일</span><span class="val">'+esc(d.item_permit_date)+'</span></div>'
+          +'<div class="row"><span class="lbl">급여구분</span><span class="val">'+(d.noins==='Y'?'비급여':'급여')+'</span></div>'
+          +'<div class="row"><span class="lbl">마약구분</span><span class="val">'+(d.narcotic_kind_code?esc(d.narcotic_kind_code):'해당없음')+'</span></div>'
+        +'</div>'
       +'</div>'
-      +'<div class="dtl">'
-      +'<div><b>약품코드</b>'+(d.drug_code||'-')+'</div>'
-      +'<div><b>영문명</b>'+(d.drug_enm||'-')+'</div>'
-      +'<div><b>제조사</b>'+(upso||'-')+'</div>'
-      +'<div><b>ATC 코드</b>'+(d.atc_cd||'-')+'</div>'
-      +'<div><b>KPIC ATC</b>'+(d.kpic_atc||'-')+'</div>'
-      +'<div><b>약품 분류</b>'+(d.drug_cls||'-')+'</div>'
-      +'<div><b>제형</b>'+(d.drug_form||'-')+'</div>'
-      +'<div><b>허가일</b>'+(d.item_permit_date||'-')+'</div>'
-      +'<div><b>급여구분</b>'+(d.noins==='Y'?'비급여':'급여')+'</div>'
-      +'<div><b>마약구분</b>'+(d.narcotic_kind_code||'해당없음')+'</div>'
-      +'</div>'
-      +'</div></div>';
-  }).join('');
+    +'</div>';
+  });
+  document.getElementById('res').innerHTML=rows.join('');
   rpg();
 }
 
@@ -162,16 +178,15 @@ function rpg(){
   const st=Math.max(1,pg-4),en=Math.min(tot,pg+4);
   let h='';
   if(pg>1)h+='<button onclick="gp('+(pg-1)+')">&#9664;</button>';
-  if(st>1)h+='<button onclick="gp(1)">1</button><span style="padding:6px 4px;font-size:13px">&#8230;</span>';
+  if(st>1)h+='<button onclick="gp(1)">1</button><span style="padding:6px 4px">&#8230;</span>';
   for(let i=st;i<=en;i++)h+='<button class="'+(i===pg?'on':'')+'" onclick="gp('+i+')">'+i+'</button>';
-  if(en<tot)h+='<span style="padding:6px 4px;font-size:13px">&#8230;</span><button onclick="gp('+tot+')">'+tot+'</button>';
+  if(en<tot)h+='<span style="padding:6px 4px">&#8230;</span><button onclick="gp('+tot+')">'+tot+'</button>';
   if(pg<tot)h+='<button onclick="gp('+(pg+1)+')">&#9654;</button>';
   document.getElementById('pg').innerHTML=h;
 }
 
 function gp(p){pg=p;render();window.scrollTo(0,0);}
 document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')go_search();});
-
 loadAll();
 </script>
 </body>
