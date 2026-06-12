@@ -6,85 +6,225 @@
 <title>KPIC 약학정보원 의약품 검색 | 헤인파트너스</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Malgun Gothic',sans-serif;background:#f5f7fa;color:#333}
-header{background:linear-gradient(135deg,#1a4f8a,#2a6fd4);color:white;padding:22px 30px}
-header h1{font-size:22px;font-weight:700}
-header p{font-size:13px;opacity:.8;margin-top:5px}
-.sb{background:white;padding:14px 30px;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.sb input{flex:1;min-width:200px;padding:10px 16px;border:2px solid #ddd;border-radius:8px;font-size:15px;outline:none;transition:border .2s}
-.sb input:focus{border-color:#1a4f8a}
-.sb select{padding:10px 10px;border:2px solid #ddd;border-radius:8px;font-size:13px;background:white;outline:none;cursor:pointer}
-.sb button{padding:10px 22px;background:#1a4f8a;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;transition:background .2s}
+body{font-family:'Malgun Gothic',sans-serif;background:#f0f4f8;color:#222;font-size:14px}
+header{background:linear-gradient(135deg,#1a4f8a 0%,#2563cc 100%);color:#fff;padding:18px 28px}
+header h1{font-size:20px;font-weight:700;letter-spacing:-.3px}
+header p{font-size:12px;opacity:.75;margin-top:4px}
+.sb{background:#fff;padding:12px 28px;border-bottom:1px solid #dde3ee;display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.sb input[type=text]{flex:1;min-width:180px;padding:9px 14px;border:1.5px solid #c8d0e0;border-radius:8px;font-size:14px;outline:none;font-family:inherit}
+.sb input[type=text]:focus{border-color:#1a4f8a;box-shadow:0 0 0 3px rgba(26,79,138,.1)}
+.sb select{padding:9px 8px;border:1.5px solid #c8d0e0;border-radius:8px;font-size:13px;background:#fff;outline:none;cursor:pointer;font-family:inherit}
+.sb button{padding:9px 20px;background:#1a4f8a;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit;white-space:nowrap}
 .sb button:hover{background:#153d6e}
-.st{padding:9px 30px;font-size:13px;color:#555;background:#eef2ff;border-bottom:1px solid #dde3f5}
-.res{padding:16px 30px;max-width:1200px;margin:0 auto}
-.card{background:white;border-radius:10px;padding:14px 18px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:14px;cursor:pointer;transition:box-shadow .15s,transform .1s}
-.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-1px)}
-.dimg{width:56px;height:56px;object-fit:contain;border-radius:6px;border:1px solid #eee;flex-shrink:0}
-.dph{width:56px;height:56px;background:#e8f0fe;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.di{flex:1;min-width:0}
-.dn{font-size:15px;font-weight:700;color:#1a4f8a}
-.de{font-size:11px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.tag{padding:3px 10px;border-radius:20px;font-size:11px;background:#e8f0fe;color:#1a4f8a;font-weight:500}
-.red{background:#fce4ec!important;color:#c62828!important}
-.ora{background:#fff3e0!important;color:#e65100!important}
-.grn{background:#e8f5e9!important;color:#2e7d32!important}
-.gray{background:#f5f5f5!important;color:#666!important}
-.dtl{display:none;padding:12px 14px;background:#f8f9ff;border-radius:8px;margin-top:10px;font-size:13px;line-height:2;border:1px solid #e8edff}
-.dtl .row{display:flex;gap:8px}
-.dtl .lbl{flex-shrink:0;width:85px;color:#777;font-weight:600}
-.dtl .val{color:#333;word-break:break-all}
-.pg{text-align:center;padding:20px;display:flex;justify-content:center;gap:4px;flex-wrap:wrap}
-.pg button{padding:7px 12px;border:1px solid #ddd;border-radius:6px;background:white;cursor:pointer;font-size:12px}
-.pg button.on{background:#1a4f8a;color:white;border-color:#1a4f8a}
-.pg button:hover:not(.on){background:#f0f4ff}
-.ld{text-align:center;padding:60px;font-size:15px;color:#888}
-.pb{width:100%;max-width:400px;height:6px;background:#e0e0e0;border-radius:3px;margin:10px auto 0;overflow:hidden}
+.cho-row{background:#fff;padding:8px 28px 10px;border-bottom:1px solid #eef0f6;display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.cho-row span{font-size:11px;color:#888;margin-right:6px;flex-shrink:0}
+.cho-btn{padding:4px 9px;border:1px solid #d4dae8;border-radius:6px;background:#fff;font-size:13px;cursor:pointer;color:#444;transition:all .15s;font-family:inherit}
+.cho-btn:hover,.cho-btn.on{background:#1a4f8a;color:#fff;border-color:#1a4f8a}
+.cls-row{background:#f7f9fc;padding:8px 28px 10px;border-bottom:1px solid #eef0f6;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cls-row span{font-size:11px;color:#888;margin-right:4px;flex-shrink:0}
+.cls-btn{padding:4px 12px;border:1px solid #d4dae8;border-radius:20px;background:#fff;font-size:12px;cursor:pointer;color:#444;transition:all .15s;font-family:inherit}
+.cls-btn:hover,.cls-btn.on{background:#2563cc;color:#fff;border-color:#2563cc}
+.atc-row{background:#f0f4fb;padding:7px 28px 9px;border-bottom:1px solid #e5eaf5;display:none;flex-wrap:wrap;gap:5px;align-items:center}
+.atc-row.show{display:flex}
+.atc-row span{font-size:11px;color:#777;margin-right:4px;flex-shrink:0}
+.atc-btn{padding:3px 11px;border:1px solid #c8d4e8;border-radius:20px;background:#fff;font-size:12px;cursor:pointer;color:#444;transition:all .15s;font-family:inherit}
+.atc-btn:hover,.atc-btn.on{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.st{padding:8px 28px;font-size:13px;color:#555;background:#eef2ff;border-bottom:1px solid #dde3f5;display:flex;align-items:center;gap:10px}
+.st b{color:#1a4f8a}
+.pb{flex:1;max-width:200px;height:5px;background:#dde3f5;border-radius:3px;overflow:hidden}
 .pf{height:100%;background:#1a4f8a;border-radius:3px;transition:width .3s}
+.res{padding:14px 28px;max-width:1100px;margin:0 auto}
+.card{background:#fff;border-radius:10px;padding:13px 16px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;gap:12px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:#d4ddf5;transform:translateY(-1px)}
+.dimg{width:52px;height:52px;object-fit:contain;border-radius:6px;border:1px solid #eee;flex-shrink:0;background:#fafafa}
+.dph{width:52px;height:52px;background:#e8f0fe;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.di{flex:1;min-width:0}
+.dn{font-size:15px;font-weight:700;color:#1a4f8a;line-height:1.3}
+.de{font-size:11px;color:#aaa;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.tag{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.t-cls{background:#ede9fe;color:#6d28d9}
+.t-form{background:#e0f2fe;color:#0369a1}
+.t-ins{background:#dcfce7;color:#15803d}
+.t-noins{background:#fff7ed;color:#c2410c}
+.t-narc{background:#fee2e2;color:#991b1b}
+.t-yr{background:#f0fdf4;color:#166534}
+.t-atc{background:#f0f9ff;color:#0c4a6e;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dtl{display:none;margin-top:10px;padding:11px 14px;background:#f8faff;border-radius:8px;border:1px solid #e2e8f5;font-size:12px}
+.dtl .dr{display:flex;gap:6px;padding:3px 0;border-bottom:1px solid #eef1f8}
+.dtl .dr:last-child{border-bottom:none}
+.dtl .dl{flex-shrink:0;width:80px;color:#778;font-weight:600;font-size:11px}
+.dtl .dv{color:#334;word-break:break-all}
+.pg{text-align:center;padding:18px;display:flex;justify-content:center;gap:3px;flex-wrap:wrap}
+.pg button{padding:6px 11px;border:1px solid #d4dae8;border-radius:6px;background:#fff;cursor:pointer;font-size:12px;font-family:inherit}
+.pg button.on{background:#1a4f8a;color:#fff;border-color:#1a4f8a}
+.pg button:hover:not(.on){background:#eef2ff}
+.ld{text-align:center;padding:50px;font-size:15px;color:#999}
 </style>
 </head>
 <body>
 <header>
   <h1>&#128138; KPIC 약학정보원 의약품 검색</h1>
-  <p>헤인파트너스(Hain Partners) &nbsp;|&nbsp; 전체 의약품 41,185건 &nbsp;|&nbsp; 데이터 출처: 약학정보원(KPIC) 2026.06</p>
+  <p>헤인파트너스(Hain Partners) &nbsp;·&nbsp; 전체 41,185건 &nbsp;·&nbsp; 약학정보원(KPIC) 2026.06</p>
 </header>
+
+<!-- 검색바 -->
 <div class="sb">
-  <input type="text" id="q" placeholder="약품명, 영문명, 제조사, 약품코드, ATC코드 검색..." autofocus>
-  <select id="fn"><option value="">급여 전체</option><option value="N">급여</option><option value="Y">비급여</option></select>
+  <input type="text" id="q" placeholder="약품명, 영문명, 제조사, 코드 검색 (초성 가능: ㄱㄱㄹ)..." autofocus>
+  <select id="fn"><option value="">급여 전체</option><option value="ins">급여</option><option value="noins">비급여</option></select>
   <select id="fk"><option value="">마약 전체</option><option value="마약">마약</option><option value="향정">향정신성</option><option value="한외">한외마약</option></select>
-  <button onclick="go_search()">&#128269; 검색</button>
+  <select id="fcls"><option value="">약품 분류 전체</option><option value="1">전문의약품</option><option value="2">일반의약품</option><option value="3">희귀/첨단바이오</option></select>
+  <button onclick="doSearch()">&#128269; 검색</button>
 </div>
+
+<!-- 초성 빠른 선택 -->
+<div class="cho-row">
+  <span>초성</span>
+  <button class="cho-btn" onclick="setCho('')">전체</button>
+  <button class="cho-btn" onclick="setCho('ㄱ')">ㄱ</button>
+  <button class="cho-btn" onclick="setCho('ㄴ')">ㄴ</button>
+  <button class="cho-btn" onclick="setCho('ㄷ')">ㄷ</button>
+  <button class="cho-btn" onclick="setCho('ㄹ')">ㄹ</button>
+  <button class="cho-btn" onclick="setCho('ㅁ')">ㅁ</button>
+  <button class="cho-btn" onclick="setCho('ㅂ')">ㅂ</button>
+  <button class="cho-btn" onclick="setCho('ㅅ')">ㅅ</button>
+  <button class="cho-btn" onclick="setCho('ㅇ')">ㅇ</button>
+  <button class="cho-btn" onclick="setCho('ㅈ')">ㅈ</button>
+  <button class="cho-btn" onclick="setCho('ㅊ')">ㅊ</button>
+  <button class="cho-btn" onclick="setCho('ㅋ')">ㅋ</button>
+  <button class="cho-btn" onclick="setCho('ㅌ')">ㅌ</button>
+  <button class="cho-btn" onclick="setCho('ㅍ')">ㅍ</button>
+  <button class="cho-btn" onclick="setCho('ㅎ')">ㅎ</button>
+  <button class="cho-btn" onclick="setCho('A')">A-Z</button>
+  <button class="cho-btn" onclick="setCho('0')">0-9</button>
+</div>
+
+<!-- ATC 대분류 -->
+<div class="cls-row" id="atcMainRow">
+  <span>ATC 대분류</span>
+  <button class="cls-btn on" onclick="setAtcMain('')">전체</button>
+</div>
+
+<!-- ATC 소분류 -->
+<div class="atc-row" id="atcSubRow">
+  <span>소분류</span>
+</div>
+
 <div class="st" id="st">
-  &#9203; 데이터 로딩 중...
+  <span>&#9203; 로딩 중...</span>
   <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
 </div>
 <div class="res" id="res"><div class="ld">&#9203; 데이터를 불러오는 중입니다...</div></div>
 <div class="pg" id="pg"></div>
 
 <script>
-let all=[], fil=[], pg=1;
+let all=[], fil=[], pg=1, curCho='', curAtcMain='', curAtcSub='';
 const PS=20;
 
-// HTML 특수문자 이스케이프
-function esc(s){
-  if(s==null||s===undefined) return '-';
-  const str = String(s);
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ── 유틸 ──────────────────────────────────────────
+function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function stripHtml(s){if(!s)return'';return String(s).replace(/<[^>]*>/g,'').replace(/&[a-z#0-9]+;/gi,' ').replace(/\s+/g,' ').trim();}
+function getUpso(s){if(!s)return'';return String(s).split('|')[0].trim();}
+function isNoins(v){return v&&String(v).includes('비급여');}
+function getPermitDate(v){if(!v)return'';const s=String(v).replace(/\D/g,'');return s.length>=8?s.slice(0,4)+'.'+s.slice(4,6)+'.'+s.slice(6,8):s;}
+function getClsName(c){return c==1?'전문의약품':c==2?'일반의약품':c==3?'희귀/첨단':'기타';}
+
+// ── 초성 추출 ──────────────────────────────────────
+const CHO=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+function getChosung(str){
+  if(!str)return'';
+  return str.split('').map(c=>{
+    const code=c.charCodeAt(0)-44032;
+    if(code<0||code>11171)return c;
+    return CHO[Math.floor(code/588)];
+  }).join('');
 }
 
-// HTML 태그 제거
-function stripHtml(s){
-  if(!s) return '-';
-  return String(s).replace(/<[^>]*>/g,'').replace(/&[a-z]+;/gi,' ').trim() || '-';
+// 검색어에서 초성만 있으면 초성 매칭, 아니면 일반 포함 검색
+function matchQuery(q, d){
+  if(!q)return true;
+  const nm=d.drug_name||'', en=d.drug_enm||'', up=d.upso_name||'', cd=d.drug_code||'', at=d.atc_cd||'';
+  // 순수 자음만인지 체크
+  const isCho=/^[ㄱ-ㅎ]+$/.test(q);
+  if(isCho){
+    const cho=getChosung(nm);
+    return cho.includes(q);
+  }
+  const ql=q.toLowerCase();
+  return nm.toLowerCase().includes(ql)||en.toLowerCase().includes(ql)||up.toLowerCase().includes(ql)||cd.toLowerCase().includes(ql)||at.toLowerCase().includes(ql);
 }
 
-// 제조사명 첫번째 파이프 앞만 추출
-function getUpso(s){
-  if(!s) return '';
-  return String(s).split('|')[0].trim();
+// ── ATC 분류 빌드 ──────────────────────────────────
+let atcMainMap={}, atcSubMap={};
+function buildAtcMap(){
+  atcMainMap={'':new Set()};
+  atcSubMap={};
+  for(const d of all){
+    if(!d.atc_cd)continue;
+    const parts=d.atc_cd.split('|');
+    const code=parts[0]||'', name=parts[2]||parts[1]||code;
+    // 대분류: 첫 글자
+    const mainCode=code.charAt(0).toUpperCase();
+    if(!mainCode)continue;
+    if(!atcMainMap[mainCode])atcMainMap[mainCode]=new Set();
+    atcMainMap[mainCode].add(code+'|'+name);
+    if(!atcSubMap[mainCode])atcSubMap[mainCode]=new Set();
+    atcSubMap[mainCode].add(code+'|'+name);
+  }
+  renderAtcMain();
 }
 
+const ATC_MAIN_NAMES={A:'소화·대사',B:'혈액·조혈기',C:'심혈관계',D:'피부과',G:'비뇨생식기·성호르몬',H:'호르몬',J:'항감염제',L:'항암·면역',M:'근골격계',N:'신경계',P:'항기생충',R:'호흡기',S:'감각기관',V:'기타'};
+function renderAtcMain(){
+  const row=document.getElementById('atcMainRow');
+  let html='<span>ATC 대분류</span><button class="cls-btn on" onclick="setAtcMain(\'\')">전체</button>';
+  const keys=Object.keys(atcMainMap).filter(k=>k).sort();
+  for(const k of keys){
+    const label=ATC_MAIN_NAMES[k]||k;
+    html+='<button class="cls-btn" onclick="setAtcMain(\''+k+'\')" id="atcM_'+k+'">'+k+' '+label+'</button>';
+  }
+  row.innerHTML=html;
+}
+
+function setAtcMain(code){
+  curAtcMain=code; curAtcSub=''; pg=1;
+  // 버튼 상태
+  document.querySelectorAll('.cls-btn').forEach(b=>b.classList.remove('on'));
+  const btn=code?document.getElementById('atcM_'+code):document.querySelector('.cls-btn');
+  if(btn)btn.classList.add('on');
+  // 소분류 렌더
+  const subRow=document.getElementById('atcSubRow');
+  if(code && atcSubMap[code]){
+    const subs=[...atcSubMap[code]].sort();
+    let html='<span>소분류</span><button class="atc-btn on" onclick="setAtcSub(\'\')">전체</button>';
+    for(const s of subs){
+      const [sc,sn]=s.split('|');
+      html+='<button class="atc-btn" onclick="setAtcSub(\''+esc(sc)+'\')" id="atcS_'+esc(sc)+'">'+esc(sc)+' '+esc(sn)+'</button>';
+    }
+    subRow.innerHTML=html;
+    subRow.classList.add('show');
+  } else {
+    subRow.classList.remove('show');
+  }
+  doSearch();
+}
+
+function setAtcSub(code){
+  curAtcSub=code; pg=1;
+  document.querySelectorAll('.atc-btn').forEach(b=>b.classList.remove('on'));
+  const btn=code?document.getElementById('atcS_'+code):document.querySelector('.atc-btn');
+  if(btn)btn.classList.add('on');
+  doSearch();
+}
+
+function setCho(cho){
+  curCho=cho; pg=1;
+  document.querySelectorAll('.cho-btn').forEach(b=>b.classList.remove('on'));
+  event.target.classList.add('on');
+  doSearch();
+}
+
+// ── 데이터 로딩 ────────────────────────────────────
 async function loadAll(){
   const files=['data_1.json','data_2.json','data_3.json'];
   for(let i=0;i<files.length;i++){
@@ -94,34 +234,52 @@ async function loadAll(){
       all=all.concat(d);
       const pct=Math.round((i+1)/files.length*100);
       document.getElementById('pf').style.width=pct+'%';
-      document.getElementById('st').innerHTML='&#9203; 로딩 중... '+pct+'% ('+all.length.toLocaleString()+'건)<div class="pb"><div class="pf" style="width:'+pct+'%"></div></div>';
-    }catch(e){console.error(files[i],e);}
+      document.getElementById('st').innerHTML='<span>&#9203; '+pct+'% 로딩 중 ('+all.length.toLocaleString()+'건)</span><div class="pb"><div class="pf" style="width:'+pct+'%"></div></div>';
+    }catch(e){console.error(e);}
   }
-  document.getElementById('st').innerHTML='&#10003; 전체 <b>'+all.length.toLocaleString()+'</b>개 로드 완료 &nbsp;|&nbsp; 검색어를 입력하거나 필터를 선택하세요';
-  go_search();
+  document.getElementById('st').innerHTML='<b>&#10003; '+all.length.toLocaleString()+'개</b>&nbsp; 로드 완료 | 검색어 입력 또는 분류 선택';
+  buildAtcMap();
+  doSearch();
 }
 
-function go_search(){
-  const q=document.getElementById('q').value.trim().toLowerCase();
-  const n=document.getElementById('fn').value;
-  const k=document.getElementById('fk').value;
+// ── 검색 ───────────────────────────────────────────
+function doSearch(){
+  const q=document.getElementById('q').value.trim();
+  const fn=document.getElementById('fn').value;
+  const fk=document.getElementById('fk').value;
+  const fcls=document.getElementById('fcls').value;
+
   fil=all.filter(d=>{
-    const nm=(d.drug_name||'').toLowerCase();
-    const en=(d.drug_enm||'').toLowerCase();
-    const up=(d.upso_name||'').toLowerCase();
-    const cd=(d.drug_code||'').toLowerCase();
-    const at=(d.atc_cd||'').toLowerCase();
-    const ka=(d.kpic_atc||'').toLowerCase();
-    const mq=!q||nm.includes(q)||en.includes(q)||up.includes(q)||cd.includes(q)||at.includes(q)||ka.includes(q);
-    const mn=!n||d.noins===n;
-    const mk=!k||(d.narcotic_kind_code&&String(d.narcotic_kind_code).includes(k));
-    return mq&&mn&&mk;
+    // 초성 필터
+    if(curCho){
+      const nm=d.drug_name||'';
+      if(curCho==='A'){if(!/^[A-Za-z0-9]/.test(nm))return false;}
+      else if(curCho==='0'){if(!/^[0-9]/.test(nm))return false;}
+      else{const cho=getChosung(nm.charAt(0));if(cho!==curCho)return false;}
+    }
+    // 텍스트 검색
+    if(!matchQuery(q,d))return false;
+    // 급여
+    if(fn==='ins'&&isNoins(d.noins))return false;
+    if(fn==='noins'&&!isNoins(d.noins))return false;
+    // 마약
+    if(fk&&!(d.narcotic_kind_code&&String(d.narcotic_kind_code).includes(fk)))return false;
+    // 약품분류
+    if(fcls&&String(d.drug_cls)!==fcls)return false;
+    // ATC 대분류
+    if(curAtcMain&&!(d.atc_cd&&d.atc_cd.charAt(0).toUpperCase()===curAtcMain))return false;
+    // ATC 소분류
+    if(curAtcSub&&!(d.atc_cd&&d.atc_cd.startsWith(curAtcSub)))return false;
+    return true;
   });
+
   pg=1;
-  document.getElementById('st').innerHTML=(q||n||k?'검색결과: ':'전체 ')+'<b>'+fil.length.toLocaleString()+'</b>개';
+  const label=(q||fn||fk||fcls||curCho||curAtcMain)?'검색결과 ':'전체 ';
+  document.getElementById('st').innerHTML=label+'<b>'+fil.length.toLocaleString()+'</b>개';
   render();
 }
 
+// ── 렌더 ───────────────────────────────────────────
 function render(){
   const s=(pg-1)*PS, it=fil.slice(s,s+PS);
   if(!it.length){
@@ -131,8 +289,12 @@ function render(){
   }
   const rows=it.map(d=>{
     const upso=getUpso(d.upso_name);
+    const ni=isNoins(d.noins);
     const yr=d.item_permit_date?String(d.item_permit_date).slice(0,4)+'년':'';
-    const cls=d.drug_cls?String(d.drug_cls):'';
+    const atcLabel=d.atc_cd?d.atc_cd.split('|')[2]||d.atc_cd.split('|')[0]:'';
+    const permitStr=getPermitDate(d.item_permit_date);
+    const clsName=getClsName(d.drug_cls);
+    const narc=d.narcotic_kind_code?String(d.narcotic_kind_code).trim():'';
     const img=d.drug_pic
       ?'<img class="dimg" src="'+esc(d.drug_pic)+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" alt=""><div class="dph" style="display:none">&#128138;</div>'
       :'<div class="dph">&#128138;</div>';
@@ -142,23 +304,25 @@ function render(){
         +'<div class="dn">'+esc(d.drug_name)+'</div>'
         +'<div class="de">'+esc(d.drug_enm)+'</div>'
         +'<div class="tags">'
-          +(upso?'<span class="tag gray">'+esc(upso)+'</span>':'')
-          +(d.drug_form?'<span class="tag">'+esc(d.drug_form)+'</span>':'')
-          +(d.noins==='Y'?'<span class="tag ora">비급여</span>':'<span class="tag grn">급여</span>')
-          +(d.narcotic_kind_code?'<span class="tag red">'+esc(d.narcotic_kind_code)+'</span>':'')
-          +(yr?'<span class="tag grn">'+yr+'</span>':'')
+          +'<span class="tag t-cls">'+clsName+'</span>'
+          +(d.drug_form?'<span class="tag t-form">'+esc(d.drug_form)+'</span>':'')
+          +(ni?'<span class="tag t-noins">비급여</span>':'<span class="tag t-ins">급여</span>')
+          +(narc?'<span class="tag t-narc">'+esc(narc)+'</span>':'')
+          +(atcLabel?'<span class="tag t-atc">'+esc(atcLabel)+'</span>':'')
+          +(yr?'<span class="tag t-yr">'+yr+'</span>':'')
         +'</div>'
         +'<div class="dtl">'
-          +'<div class="row"><span class="lbl">약품코드</span><span class="val">'+esc(d.drug_code)+'</span></div>'
-          +'<div class="row"><span class="lbl">영문명</span><span class="val">'+esc(d.drug_enm)+'</span></div>'
-          +'<div class="row"><span class="lbl">제조사</span><span class="val">'+esc(upso)+'</span></div>'
-          +'<div class="row"><span class="lbl">ATC 코드</span><span class="val">'+esc(d.atc_cd)+'</span></div>'
-          +'<div class="row"><span class="lbl">KPIC ATC</span><span class="val">'+stripHtml(d.kpic_atc)+'</span></div>'
-          +'<div class="row"><span class="lbl">약품 분류</span><span class="val">'+esc(cls)+'</span></div>'
-          +'<div class="row"><span class="lbl">제형</span><span class="val">'+esc(d.drug_form)+'</span></div>'
-          +'<div class="row"><span class="lbl">허가일</span><span class="val">'+esc(d.item_permit_date)+'</span></div>'
-          +'<div class="row"><span class="lbl">급여구분</span><span class="val">'+(d.noins==='Y'?'비급여':'급여')+'</span></div>'
-          +'<div class="row"><span class="lbl">마약구분</span><span class="val">'+(d.narcotic_kind_code?esc(d.narcotic_kind_code):'해당없음')+'</span></div>'
+          +'<div class="dr"><span class="dl">약품코드</span><span class="dv">'+esc(d.drug_code)+'</span></div>'
+          +'<div class="dr"><span class="dl">영문명</span><span class="dv">'+esc(d.drug_enm)+'</span></div>'
+          +'<div class="dr"><span class="dl">제조사</span><span class="dv">'+esc(upso)+'</span></div>'
+          +'<div class="dr"><span class="dl">ATC코드</span><span class="dv">'+esc(d.atc_cd?d.atc_cd.split('|')[0]:'')+'</span></div>'
+          +'<div class="dr"><span class="dl">ATC분류</span><span class="dv">'+esc(atcLabel)+'</span></div>'
+          +'<div class="dr"><span class="dl">KPIC ATC</span><span class="dv">'+esc(stripHtml(d.kpic_atc))+'</span></div>'
+          +'<div class="dr"><span class="dl">약품분류</span><span class="dv">'+clsName+'</span></div>'
+          +'<div class="dr"><span class="dl">제형</span><span class="dv">'+esc(d.drug_form)+'</span></div>'
+          +'<div class="dr"><span class="dl">허가일</span><span class="dv">'+permitStr+'</span></div>'
+          +'<div class="dr"><span class="dl">급여구분</span><span class="dv">'+(ni?'비급여':'급여')+'</span></div>'
+          +(narc?'<div class="dr"><span class="dl">마약구분</span><span class="dv">'+esc(narc)+'</span></div>':'')
         +'</div>'
       +'</div>'
     +'</div>';
@@ -167,10 +331,7 @@ function render(){
   rpg();
 }
 
-function tog(el){
-  const d=el.querySelector('.dtl');
-  d.style.display=d.style.display==='block'?'none':'block';
-}
+function tog(el){const d=el.querySelector('.dtl');d.style.display=d.style.display==='block'?'none':'block';}
 
 function rpg(){
   const tot=Math.ceil(fil.length/PS);
@@ -178,15 +339,15 @@ function rpg(){
   const st=Math.max(1,pg-4),en=Math.min(tot,pg+4);
   let h='';
   if(pg>1)h+='<button onclick="gp('+(pg-1)+')">&#9664;</button>';
-  if(st>1)h+='<button onclick="gp(1)">1</button><span style="padding:6px 4px">&#8230;</span>';
+  if(st>1)h+='<button onclick="gp(1)">1</button><span style="line-height:2;padding:0 4px">&#8230;</span>';
   for(let i=st;i<=en;i++)h+='<button class="'+(i===pg?'on':'')+'" onclick="gp('+i+')">'+i+'</button>';
-  if(en<tot)h+='<span style="padding:6px 4px">&#8230;</span><button onclick="gp('+tot+')">'+tot+'</button>';
+  if(en<tot)h+='<span style="line-height:2;padding:0 4px">&#8230;</span><button onclick="gp('+tot+')">'+tot+'</button>';
   if(pg<tot)h+='<button onclick="gp('+(pg+1)+')">&#9654;</button>';
   document.getElementById('pg').innerHTML=h;
 }
 
 function gp(p){pg=p;render();window.scrollTo(0,0);}
-document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')go_search();});
+document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 loadAll();
 </script>
 </body>
